@@ -1,0 +1,46 @@
+Analizadores.Cup;
+import java_cup.runtime.Symbol;
+
+parser code {:
+
+	
+	// Connect this parser to a scanner!
+	
+
+
+        public void syntax_error(Symbol cur_token) {
+            System.out.println("Error "+cur_token);
+        }
+
+	
+:}
+
+/* Terminals (tokens returned by the scanner). */
+terminal String   ESCRIBIR,FIN,SIGNO_MENOS,SIGNO_POR,SIGNO_DIVISION,SIGNO_MAS,IDD;
+
+/* Non-terminals */
+non terminal Object inicio,estructura_escribir;
+non terminal String signo;
+
+
+/* The grammar */
+start with inicio;
+
+inicio ::= inicio estructura_escribir | estructura_escribir;
+
+estructura_escribir ::= ESCRIBIR signo:varSigno IDD:idLexema FIN {:
+	System.out.println("Se encontro una instruccion ESCRIBIR \n  IDD= "+idLexema+" Signo= "+varSigno);
+:};
+
+signo ::= SIGNO_MENOS:e1 {: RESULT = e1;:}| SIGNO_POR:e2 {:RESULT = e2;:} | SIGNO_DIVISION:e3 {:RESULT = e3;:} | SIGNO_MAS:e4 {:RESULT = e4;:};
+
+
+
+
+
+
+
+
+
+
+
